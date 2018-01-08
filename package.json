@@ -9,7 +9,6 @@
     "jquery": "^3.2.1",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
-    "paho-mqtt": "https://github.com/cmmakerclub/paho-mqtt.git",
     "popper.js": "^1.12.9",
     "react": "^16.2.0",
     "react-copy-to-clipboard": "^5.0.1",

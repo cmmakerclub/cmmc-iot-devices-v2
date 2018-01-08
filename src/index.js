@@ -11,6 +11,7 @@ import 'bootstrap/dist/js/bootstrap.min'
 // // import registerServiceWorker from './registerServiceWorker';
 
 API.MQTT()
+// API.TEST()
 
 ReactDOM.render(<App/>, document.getElementById('root'))
 // // registerServiceWorker();

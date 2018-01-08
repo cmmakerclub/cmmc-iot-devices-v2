@@ -16,69 +16,87 @@ export default class App extends Component {
 
   constructor (props) {
     super(props)
+
     this.state = {
       devices: [],
-      devicesOnline: [],
-      bufferDevices: [],
-      topicMessages: '',
-      lastMessage: {
-        uuid: '',
-        time: ''
+      messageArrived: {
+        body: ''
       }
     }
 
     this.storeData = store.state
 
     store.addListener(() => {
-      const devices = this.storeData.devices
-      const devicesOnline = this.storeData.devicesOnline
-      this.bufferDevices = this.state.bufferDevices
-      const topicMessages = this.storeData.topicMessages
 
-      const arrayDevices = []
-      const arrayDevicesOnline = []
-
-      if (devices !== this.state.devices) {
-        Object.keys(devices).map(key => {
-          arrayDevices.push(devices[key])
-        })
-        this.setState({devices: arrayDevices})
+      const storeDevices = this.storeData.devices
+      const storeMessageArrived = {
+        body: this.storeData.messageArrived
       }
 
-      if (devicesOnline !== this.state.devicesOnline) {
+      this.setState({
+        devices: storeDevices,
+        messageArrived: storeMessageArrived
+      })
 
-        let compareDevices = []
 
-        Object.keys(devicesOnline).map(key => {
-          arrayDevicesOnline[key] = (devicesOnline[key])
-          compareDevices.push(devicesOnline[key])
-        })
-        this.setState({devicesOnline: arrayDevicesOnline})
+      // const messageArrived = {
+      //   uuid: messageArrived.uuid,
+      //   time: moment.unix(messageArrived.gps_us).format('DD/MM/YYYY HH:mm:ss')
+      // }
+      //
+      // this.setState({
+      //   lastMessage: lastMessage,
+      //   topicMessageArrived: topicMessages
+      // })
 
-        if (!_.isEmpty(compareDevices)) {
-          this.setState({devices: compareDevices})
-        }
-
-        console.log('devices : ', this.state.devices)
-        console.log('devices online : ', arrayDevicesOnline)
-        console.log('compare devices : ', compareDevices)
-      }
-
-      if (topicMessages !== this.state.topicMessages) {
-
-        const messageArrived = JSON.parse(topicMessages)
-
-        const lastMessage = {
-          uuid: messageArrived.uuid,
-          time: moment.unix(messageArrived.gps_us).format('DD/MM/YYYY HH:mm:ss')
-        }
-
-        this.setState({lastMessage: lastMessage})
-
-        this.setState({topicMessages: topicMessages})
-      }
-
-      //console.log(this.storeData)
+      // const devices = this.storeData.devices
+      // const devicesOnline = this.storeData.devicesOnline
+      //
+      // this.bufferDevices = this.state.bufferDevices
+      // const topicMessages = this.storeData.topicMessages
+      //
+      // const arrayDevices = []
+      // const arrayDevicesOnline = []
+      //
+      // if (devices !== this.state.devices) {
+      //   Object.keys(devices).map(key => {
+      //     arrayDevices.push(devices[key])
+      //   })
+      //   this.setState({devices: arrayDevices})
+      // }
+      //
+      // if (devicesOnline !== this.state.devicesOnline) {
+      //
+      //   let compareDevices = []
+      //
+      //   Object.keys(devicesOnline).map(key => {
+      //     arrayDevicesOnline[key] = (devicesOnline[key])
+      //     compareDevices.push(devicesOnline[key])
+      //   })
+      //   this.setState({devicesOnline: arrayDevicesOnline})
+      //
+      //   if (!_.isEmpty(compareDevices)) {
+      //     this.setState({devices: compareDevices})
+      //   }
+      //
+      //   console.log('devices : ', this.state.devices)
+      //   console.log('devices online : ', arrayDevicesOnline)
+      //   console.log('compare devices : ', compareDevices)
+      // }
+      //
+      // if (topicMessages !== this.state.topicMessages) {
+      //
+      //   const messageArrived = JSON.parse(topicMessages)
+      //
+      //   const lastMessage = {
+      //     uuid: messageArrived.uuid,
+      //     time: moment.unix(messageArrived.gps_us).format('DD/MM/YYYY HH:mm:ss')
+      //   }
+      //
+      //   this.setState({lastMessage: lastMessage})
+      //
+      //   this.setState({topicMessages: topicMessages})
+      // }
     })
 
     console.log('constructor', this.props)
@@ -86,12 +104,6 @@ export default class App extends Component {
 
   componentDidMount () {
     console.log('componentDidMount', this.props)
-  }
-
-  filterTopic = (e) => {
-    e.preventDefault()
-    this.setState({filterTopic: `MARU/${e.target.value}`})
-    API.MQTT(this.state.filterTopic, true)
   }
 
   render () {
@@ -105,20 +117,7 @@ export default class App extends Component {
 
           {
             this.state.devices.map(device => {
-
-              return <Device
-                key={uuid()}
-                title={device.uuid}
-                lastUpdate={moment.unix(device.gps_us).fromNow()}
-                uptime_s={device.uptime_s}
-                battery_percent={device.battery_percent}
-                working_count={device.working_count}
-                open_fail={device.open_fail}
-                boot_count={device.boot_count}
-                sent_data_count={device.sent_data_count}
-                retain={device.retain}
-                online={(this.state.devicesOnline[device.uuid]) !== undefined && true}
-              />
+              return <Device data={device} key={uuid()}/>
             })
           }
 
@@ -136,20 +135,20 @@ export default class App extends Component {
 
                 <div className="form-group text-primary">
                   <b>
-                    uuid : {this.state.lastMessage.uuid.substr(-4)}<br/>
-                    sent : {(this.state.lastMessage.time) ? moment(this.state.lastMessage.time).fromNow() : ''}
+                    {/*uuid : {this.state.messageArrived.uuid.substr(-4)}<br/>*/}
+                    {/*sent : {(this.state.lastMessage.time) ? moment(this.state.lastMessage.time).fromNow() : ''}*/}
                   </b>
                 </div>
 
                 <div className="form-group">
                   <code>
-                    {this.state.topicMessages}
+                    {this.state.messageArrived.body}
                   </code>
                 </div>
 
                 <form>
                   <div className="form-group text-right">
-                    <CopyToClipboard text={this.state.topicMessages}>
+                    <CopyToClipboard text={this.state.messageArrived.body}>
                       <button type='button' className='btn btn-primary'>
                         <i className='fa fa-clipboard'/>&nbsp;
                         copy

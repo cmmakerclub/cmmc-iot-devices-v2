@@ -1,41 +1,30 @@
 import { Store } from 'flux/utils'
 import AppDispatcher from './Dispatcher'
 import ActionTypes from './Constants'
+import _ from 'underscore'
 
 class MyStore extends Store {
 
   constructor (props) {
     super(props)
-
-    this.state = {
-      devices: [],
-      devicesOnline: [],
-      topicMessages: ''
-    }
-
+    this.state = {devices: [], messageArrived: ''}
   }
 
   __onDispatch (action) {
 
     if (action.type === ActionTypes.MQTT_MESSAGE_ARRIVED) {
 
-      const previousValue = this.state.devices
-      const currentValue = JSON.parse(action.data)
-      const devicesOnline = this.state.devicesOnline
-
-      if (previousValue[currentValue.uuid] === undefined) {
-        currentValue.retain = action.retain
-        previousValue[currentValue.uuid] = currentValue
-      } else {
-        currentValue.retain = action.retain
-        devicesOnline[currentValue.uuid] = currentValue
-      }
-
+      const dataIncoming = JSON.parse(action.data)
+      dataIncoming.retain = action.retain
+      let storeDevices = this.state.devices
+      storeDevices.push(dataIncoming)
+      storeDevices = _.uniq(storeDevices, device => device.uuid)
+      this.state.devices = storeDevices
       this.__emitChange()
 
     } else if (action.type === ActionTypes.MQTT_TOPIC_MESSAGE_ARRIVED) {
 
-      this.state.topicMessages = action.data
+      this.state.messageArrived = action.data
       this.__emitChange()
 
     }
