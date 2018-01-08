@@ -14,7 +14,7 @@ export default class Device extends Component {
 
   componentDidMount () {
     this.timer = setInterval(() => {
-      let dataShouldBeArrivedAtTime = moment.now() + this.state.data.sleep_time_ms
+      let dataShouldBeArrivedAtTime = this.state.data.server_unix + this.state.data.sleep_time_ms
       let remainingTime = dataShouldBeArrivedAtTime - moment.now()
 
       // console.log('uuid : ', this.state.data.uuid)
@@ -22,13 +22,13 @@ export default class Device extends Component {
       // console.log('remainingTime : ', remainingTime)
 
       const d = Object.assign({}, this.state.data)
-      d.will_update_ms = remainingTime
+      d.will_update_ms = (remainingTime/1000).toFixed(2)
       this.setState({data: d})
-    }, 1000)
+    }, 100)
   }
 
   componentWillUpdate () {
-    console.log(this.state.data)
+    // console.log(this.state.data)
   }
 
   componentWillUnmount () {
@@ -62,19 +62,21 @@ export default class Device extends Component {
               <b>
                 <p className='text-danger'>
                   <i className='fa fa-clock-o'/>
-                  &ensp;{moment.unix(this.state.data.gps_us).fromNow()}
+                  &ensp;{moment(this.state.data.server_unix).fromNow()}
                 </p>
                 <p className='text-danger'>
-                  will update in :
-                  &ensp;{this.state.data.will_update_ms}
+                  next update in:
+                  &ensp;{this.state.data.will_update_ms}s
                 </p>
                 <p style={styles.content}>working_count : {this.state.data.working_count}</p>
                 <p style={styles.content}>uptime_s : {this.state.data.uptime_s}</p>
-                <p style={styles.content}>battery_percent : {this.state.data.battery_percent}</p>
+                <p style={styles.content}>battery_raw: {this.state.data.battery_raw}</p>
                 <p style={styles.content}>open_fail : {this.state.data.open_fail}</p>
                 <p style={styles.content}>boot_count : {this.state.data.boot_count}</p>
                 <p style={styles.content}>sent_data_count : {this.state.data.sent_data_count}</p>
                 <p style={styles.content}>gps_diff : {this.state.data.gps_diff}</p>
+                <p
+                  style={styles.content}>{this.state.data.gps_latitude.toFixed(6)}, {this.state.data.gps_longitude.toFixed(6)}</p>
                 <hr/>
                 <p className='text-secondary' style={styles.footer}>parser_version
                   : {this.state.data.parser_version}</p>

@@ -16,7 +16,7 @@ const API = {
       //useSSL: true,
       userName: 'cmmc',
       password: 'cmmc',
-      onSuccess: onConnect
+      onSuccess: onConnect,
     }
 
     const client = new Paho.MQTT.Client(init.hostname, init.port, init.path, init.clientId)
@@ -38,6 +38,7 @@ const API = {
     }
 
     function onMessageArrived (message) {
+      console.log('on message arrived...', message.destinationName, '', message.payloadString)
 
       Dispatcher.dispatch({
         type: TypeActions.MQTT_MESSAGE_ARRIVED,
