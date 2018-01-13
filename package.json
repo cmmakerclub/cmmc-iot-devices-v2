@@ -18,7 +18,7 @@
     "sweetalert": "^2.1.0",
     "sweetalert2": "^7.1.2",
     "underscore": "^1.8.3",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0cmmakerclub@gmail.com"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,7 +27,8 @@
     "eject": "react-scripts eject"
   },
   "main": "src/App.js",
-  "repository": "git@github.com:compilerexe/cmmc-iot-devices.git",
-  "author": "Compiler Exe <compilerexe@gmail.com>",
+  "homepage": "./",
+  "repository": "https://github.com/cmmakerclub/cmmc-iot-devices-v2",
+  "author": "Chiang Mai Maker Club<cmmakerclub@gmail.com>",
   "license": "MIT"
 }
