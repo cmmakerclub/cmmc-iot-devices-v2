@@ -20,7 +20,7 @@ class MyStore extends Store {
       dataIncoming.retain = action.retain
 
       this.state.devicesMap[dataIncoming.uuid] = Object.assign({}, dataIncoming)
-      this.state.devices = _.values(this.state.devicesMap)
+      this.state.devices = _.sortBy(_.values(this.state.devicesMap), (item) => item.server_unix + item.sleep_time_ms)
 
       this.__emitChange()
 

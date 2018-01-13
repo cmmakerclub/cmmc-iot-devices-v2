@@ -8,41 +8,30 @@ export default class Device extends Component {
 
   constructor (props) {
     super()
-    this.state = {
-      data: props.data
-    }
+    this.state = {data: props.data}
   }
 
   componentDidMount () {
     this.timer = setInterval(() => {
-      let dataShouldBeArrivedAtTime = this.state.data.server_unix + this.state.data.sleep_time_ms
+      let dataShouldBeArrivedAtTime = (this.state.data.server_unix + this.state.data.sleep_time_ms)
       let remainingTime = dataShouldBeArrivedAtTime - moment.now()
-
       const d = Object.assign({}, this.state.data, {will_update_ms: (remainingTime / 1000).toFixed(2)})
       this.setState({data: d})
     }, 100)
   }
 
-  componentWillUpdate () {
-    // console.log(this.state.data)
-  }
+  componentWillUpdate () { }
 
   componentWillUnmount () {
     clearInterval(this.timer)
   }
 
   render () {
-
     const styles = {
-      content: {
-        marginBottom: 5
-      },
-      footer: {
-        marginBottom: 0
-      }
+      content: {marginBottom: 5},
+      footer: {marginBottom: 0}
     }
-
-    var txtClass = classNames({
+    const txtClass = classNames({
       'text': true,
       'text-danger': this.state.data.will_update_ms < 60
     })
