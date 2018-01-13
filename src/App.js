@@ -27,11 +27,13 @@ export default class App extends Component {
     this.storeData = store.state
 
     store.addListener(() => {
+      console.log('store has updated.', store)
 
       const storeDevices = this.storeData.devices
       const storeMessageArrived = {
         body: this.storeData.messageArrived
       }
+
 
       this.setState({
         devices: storeDevices,

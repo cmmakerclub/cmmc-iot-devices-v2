@@ -1,21 +1,19 @@
 import Paho from './libs/mqttws31'
 import Dispatcher from './flux/Dispatcher'
 import TypeActions from './flux/Constants'
-import moment from 'moment-timezone'
+// import moment from 'moment-timezone'
 
 const API = {
   MQTT: (topic, filterTopic = false) => {
     const init = {
-      hostname: 'odin.cmmc.io',
+      hostname: 'mqtt.cmmc.io',
       port: 9001,
-      path: '',
-      clientId: String(Math.random() * 100)
+      path: '/mqttws',
+      clientId: 'ct2' + String(Math.random() * 100)
     }
 
     const options = {
-      //useSSL: true,
-      userName: 'cmmc',
-      password: 'cmmc',
+      useSSL: false,
       onSuccess: onConnect,
     }
 
@@ -38,20 +36,12 @@ const API = {
     }
 
     function onMessageArrived (message) {
-      console.log('on message arrived...', message.destinationName, '', message.payloadString)
-
+      console.log('on message arrived...', message.destinationName)
       Dispatcher.dispatch({
         type: TypeActions.MQTT_MESSAGE_ARRIVED,
         data: message.payloadString,
         retain: message.retained
       })
-
-      Dispatcher.dispatch({
-        type: TypeActions.MQTT_TOPIC_MESSAGE_ARRIVED,
-        data: message.payloadString,
-        retain: message.retained
-      })
-
     }
   },
 
