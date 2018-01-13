@@ -39,8 +39,7 @@ const API = {
     function onMessageArrived (message) {
       Dispatcher.dispatch({
         type: TypeActions.MQTT_MESSAGE_ARRIVED,
-        data: message.payloadString,
-        retain: message.retained
+        data: message.payloadString
       })
     }
   },
