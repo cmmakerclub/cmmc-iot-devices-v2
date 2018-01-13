@@ -48,26 +48,20 @@ export default class Device extends Component {
               </b>
             </div>
             <div className="card-body text-primary">
-              <b>
-                <p className={txtClass}>
-                  <i className='fa fa-clock-o'/>
-                  &ensp;{moment(this.state.data.server_unix).fromNow()}
-                </p>
-                <p style={styles.content} className={txtClass}>Next
-                  update: <span>{this.state.data.will_update_ms}s</span></p>
-                <p style={styles.content}>Uptime : {this.state.data.uptime_s}s</p>
-                <p style={styles.content}>Battery: {this.state.data.battery_raw / 100.0}v</p>
-                {/*<p style={styles.content}>working_count : {this.state.data.working_count}</p>*/}
-                {/*<p style={styles.content}>open_fail : {this.state.data.open_fail}</p>*/}
-                {/*<p style={styles.content}>boot_count : {this.state.data.boot_count}</p>*/}
-                {/*<p style={styles.content}>sent_data_count : {this.state.data.sent_data_count}</p>*/}
-                <p
-                  style={styles.content}>{this.state.data.gps_latitude.toFixed(6)}, {this.state.data.gps_longitude.toFixed(6)}
-                  ({this.state.data.gps_diff})</p>
-                <hr/>
-                <p className='text-secondary' style={styles.footer}>App v{this.state.data.app_version}, Parser
-                  v{this.state.data.parser_version}</p>
-              </b>
+              <p className={txtClass}>
+                <i className='fa fa-clock-o'/>
+                &ensp;{moment(this.state.data.server_unix).fromNow()}
+              </p>
+              <p style={styles.content} className={txtClass}>Next
+                update: <span>{this.state.data.will_update_ms}s</span></p>
+              <p style={styles.content}>Uptime : {this.state.data.uptime_s}s</p>
+              <p style={styles.content}>Battery: {this.state.data.battery_raw / 100.0}v</p>
+              <p
+                style={styles.content}>{this.state.data.gps_latitude.toFixed(7)}, {this.state.data.gps_longitude.toFixed(7)}
+                ({this.state.data.gps_diff.toFixed(2)})</p>
+              <hr/>
+              <p className='text-secondary' style={styles.footer}>App v{this.state.data.app_version}, Parser
+                v{this.state.data.parser_version}</p>
             </div>
           </div>
         </div>

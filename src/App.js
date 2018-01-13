@@ -2,11 +2,7 @@ import React, { Component } from 'react'
 import Navbar from './components/Menu'
 import Device from './components/Device'
 import uuid from 'uuid'
-import ActionTypes from './flux/Constants'
-import Dispatcher from './flux/Dispatcher'
 import store from './flux/Store'
-import _ from 'underscore'
-import API from './API'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 let moment = require('moment-timezone')
@@ -32,16 +28,12 @@ export default class App extends Component {
         body: this.storeData.messageArrived
       }
 
-      this.setState({
-        devices: storeDevices,
-        messageArrived: storeMessageArrived
-      })
+      this.setState({devices: storeDevices, messageArrived: storeMessageArrived})
 
     })
   }
 
-  componentDidMount () {
-  }
+  componentDidMount () { }
 
   render () {
 
@@ -51,7 +43,7 @@ export default class App extends Component {
         <Navbar/>
 
         <div className="row" style={{marginTop: 30}}>
-          {this.state.devices.map(device => { return <Device data={device} key={uuid()}/> })}
+          {this.state.devices.map(device => <Device data={device} key={uuid()}/>)}
         </div>
 
         <div className="row" style={{marginTop: 20, marginBottom: 30}}>
