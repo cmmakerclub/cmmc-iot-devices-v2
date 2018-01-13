@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import ActionTypes from '../flux/Constants'
-import Dispatcher from '../flux/Dispatcher'
-import store from '../flux/Store'
 
 export default class Menu extends Component {
 
   constructor (props) {
-    super(props)
+    super()
   }
 
   render () {
