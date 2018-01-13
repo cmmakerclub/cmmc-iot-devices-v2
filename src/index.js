@@ -8,9 +8,10 @@ import 'font-awesome/css/font-awesome.min.css'
 import 'jquery/dist/jquery.min'
 import 'popper.js/dist/umd/popper.min'
 import 'bootstrap/dist/js/bootstrap.min'
-import registerServiceWorker from './registerServiceWorker'
 
 API.MQTT()
 
 ReactDOM.render(<App/>, document.getElementById('root'))
-registerServiceWorker()
+
+// import registerServiceWorker from './registerServiceWorker'
+// registerServiceWorker()
