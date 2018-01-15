@@ -3,7 +3,6 @@ import Navbar from './components/Menu'
 import Device from './components/Device'
 import uuid from 'uuid'
 import store from './flux/Store'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 let moment = require('moment-timezone')
 moment.locale('th')
@@ -14,22 +13,14 @@ export default class App extends Component {
     super(props)
 
     this.state = {
-      devices: [],
-      messageArrived: {
-        body: ''
-      }
+      devices: []
     }
 
     this.storeData = store.state
 
     store.addListener(() => {
       const storeDevices = this.storeData.devices
-      const storeMessageArrived = {
-        body: this.storeData.messageArrived
-      }
-
-      this.setState({devices: storeDevices, messageArrived: storeMessageArrived})
-
+      this.setState({devices: storeDevices})
     })
   }
 

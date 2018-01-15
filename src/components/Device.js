@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment-timezone'
 import classNames from 'classnames'
+import swal from 'sweetalert'
 
 moment.locale('th')
 
@@ -35,6 +36,15 @@ export default class Device extends Component {
       'text': true,
       'text-danger': this.state.data.will_update_ms < 60
     })
+
+    const info = (event) => {
+      event.preventDefault()
+      return swal({
+        title: `LINKIT : ${this.state.data.linkit}`,
+        text: `${JSON.stringify(this.state.data)}`
+      })
+    }
+
     return (
       <div className="col-md-3">
         <div className="form-group">
@@ -42,7 +52,6 @@ export default class Device extends Component {
             <div className='card-header bg-success'>
               <b>
                 <small style={{color: 'white'}}>
-                  {/*UUID : {this.state.data.uuid.substr(-4)}<br/>*/}
                   LINKIT : {this.state.data.linkit}
                 </small>
               </b>
@@ -59,6 +68,9 @@ export default class Device extends Component {
               <p
                 style={styles.content}>{this.state.data.gps_latitude.toFixed(7)}, {this.state.data.gps_longitude.toFixed(7)}
                 ({this.state.data.gps_diff.toFixed(2)})</p>
+              <button type='button' className='btn btn-primary' style={{width: '100%'}} onClick={e => info(e)}>
+                <i className='fa fa-info-circle'/> MORE INFO
+              </button>
               <hr/>
               <p className='text-secondary' style={styles.footer}>App v{this.state.data.app_version}, Parser
                 v{this.state.data.parser_version}</p>
