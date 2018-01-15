@@ -42,41 +42,8 @@ export default class App extends Component {
 
         <Navbar/>
 
-        <div className="row" style={{marginTop: 30}}>
+        <div className="row" style={{marginTop: 20, marginBottom: 10}}>
           {this.state.devices.map(device => <Device data={device} key={uuid()}/>)}
-        </div>
-
-        <div className="row" style={{marginTop: 20, marginBottom: 30}}>
-
-          <div className="col">
-            <div className="card">
-              <div className="card-body">
-
-                <div className="form-group">
-                  <h3>Message Arrived</h3>
-                </div>
-
-                <div className="form-group">
-                  <code>
-                    {this.state.messageArrived.body}
-                  </code>
-                </div>
-
-                <form>
-                  <div className="form-group text-right">
-                    <CopyToClipboard text={this.state.messageArrived.body}>
-                      <button type='button' className='btn btn-primary'>
-                        <i className='fa fa-clipboard'/>&nbsp;
-                        copy
-                      </button>
-                    </CopyToClipboard>
-                  </div>
-                </form>
-
-              </div>
-            </div>
-          </div>
-
         </div>
 
       </div>
