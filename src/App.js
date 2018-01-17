@@ -12,9 +12,7 @@ export default class App extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      devices: []
-    }
+    this.state = {devices: []}
 
     this.storeData = store.state
 
@@ -24,19 +22,13 @@ export default class App extends Component {
     })
   }
 
-  componentDidMount () { }
-
   render () {
-
     return (
       <div className='container'>
-
         <Navbar/>
-
         <div className="row" style={{marginTop: 20, marginBottom: 10}}>
           {this.state.devices.map(device => <Device data={device} key={uuid()}/>)}
         </div>
-
       </div>
     )
   }
